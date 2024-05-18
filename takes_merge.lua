@@ -7,7 +7,25 @@ ardour {
 }
 
 function factory()
+  local function is_it_ok()
+    local md = LuaDialog.Message(
+      "Confirm", "Are you sure?",
+      LuaDialog.MessageType.Question,
+      LuaDialog.ButtonType.Yes_No
+    )
+    answer = md:run()
+
+    md = nil
+    collectgarbage()
+
+    return answer == 3
+  end
+
   return function()
+    if (not is_it_ok()) then
+      return
+    end
+
     local sel = Editor:get_selection()
 
     local main_playlist = nil
