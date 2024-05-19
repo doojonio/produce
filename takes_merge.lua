@@ -3,7 +3,7 @@ ardour {
   name = "Takes merge",
   author = "doojonio",
   license = "GPL",
-  description = [[Merges playlists on different tracks to one on the first track]],
+  description = [[Merges playlists on different tracks to one on the first selected track]],
 }
 
 function factory()

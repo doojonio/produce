@@ -3,7 +3,9 @@ ardour {
     name = "Take save",
     author = "doojonio",
     license = "GPL",
-    description = [[Saves the current playlist on a new track from vox template and creates new playlist for the current one]],
+    description = [[
+        Moves the rec-armed track's playlist to a new track, created with initially selected template and name
+    ]],
 }
 
 DEFAULT_TEMPLATE = "vox take.template"
