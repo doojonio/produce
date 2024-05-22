@@ -56,39 +56,52 @@ function factory()
         local rv = od:run()
 
         if (not rv) then
-            TEMPLATE = DEFAULT_TEMPLATE
-            return DEFAULT_TEMPLATE
+            TEMPLATE = nil
+            return nil
         end
 
         TRACK_NAME = rv["track_name"] or TRACK_NAME
         TEMPLATE = rv["template"]
 
-        return TEMPLATE or DEFAULT_TEMPLATE
+        return TEMPLATE
+    end
+
+    function get_rec_armed_track()
+        for route in Session:get_tracks():iter() do
+            if (route:rec_enable_control():get_value() == 1) then
+                return route:to_track()
+            end
+        end
+
+        return nil
     end
 
     return function()
-        template_name = ARDOUR.user_config_directory(-1) .. "/route_templates/" .. get_template()
+        rec_armed = get_rec_armed_track()
+        if (not rec_armed) then
+            TEMPLATE = nil
+            return
+        end
+
+        template_name = get_template()
+        if (not template_name) then
+            return
+        end
+
+        template_path = ARDOUR.user_config_directory(-1) .. "/route_templates/" .. template_name
         new_route = Session:new_route_from_template(
             1,
             ArdourUI.translate_order(ArdourUI.InsertAt.AfterSelection),
-            template_name,
+            template_path,
             TRACK_NAME,
             ARDOUR.PlaylistDisposition.NewPlaylist
         )
         if (new_route:size() == 0) then
-            print("failed to create vox take route")
+            print("failed to create " .. TRACK_NAME .. " route")
             return
         end
 
-        for route in Session:get_tracks():iter() do
-            if (route:rec_enable_control():get_value() == 0) then
-                goto continue
-            end
-
-            new_route:front():to_track():use_playlist(ARDOUR.DataType:audio(), route:to_track():playlist(), 1)
-            route:to_track():use_new_playlist(ARDOUR.DataType:audio())
-
-            ::continue::
-        end
+        new_route:front():to_track():use_playlist(ARDOUR.DataType:audio(), rec_armed:playlist(), 1)
+        rec_armed:to_track():use_new_playlist(ARDOUR.DataType:audio())
     end
 end
