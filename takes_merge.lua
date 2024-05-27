@@ -1,6 +1,6 @@
 ardour {
   ["type"] = "EditorAction",
-  name = "Takes merge",
+  name = "PRDC:Takes merge",
   author = "doojonio",
   license = "GPL",
   description = [[Merges playlists on different tracks to one on the first selected track]],

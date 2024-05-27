@@ -1,6 +1,6 @@
 ardour {
     ["type"] = "EditorAction",
-    name = "Set output",
+    name = "PRDC:Set output",
     author = "doojonio",
     license = "GPL",
     description = [[Set output of selected routes to last selected route]],

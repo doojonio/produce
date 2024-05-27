@@ -1,6 +1,6 @@
 ardour {
     ["type"] = "EditorAction",
-    name = "Take save",
+    name = "PRDC:Take save",
     author = "doojonio",
     license = "GPL",
     description = [[
