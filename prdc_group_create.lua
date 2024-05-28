@@ -1,6 +1,6 @@
 ardour {
   ["type"] = "EditorAction",
-  name = "PRDC:Group Create",
+  name = "PRDC Group Create",
   author = "doojonio",
   license = "GPL",
   description = [[Create group of selected tracks, create bus from template, set tracks outputs to bus]],

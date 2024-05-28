@@ -1,6 +1,6 @@
 ardour {
     ["type"] = "EditorAction",
-    name = "PRDC:Add AUX Sends",
+    name = "PRDC Add AUX Sends",
     author = "doojonio",
     license = "GPL",
     description = [[Add aux sends to last selected route for all selected routes except the last one]],
