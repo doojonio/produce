@@ -8,12 +8,13 @@ ardour {
     ]],
 }
 
-DEFAULT_TEMPLATE = "vox take.template"
-TRACK_NAME = "vox take"
-TEMPLATE = nil
 
 function factory()
-    function scandir(directory)
+    local DEFAULT_TEMPLATE = "vox take.template"
+    local TRACK_NAME = "vox take"
+    local TEMPLATE = nil
+
+    local function scandir(directory)
         local i, t, popen = 0, {}, io.popen
         local pfile = popen('ls -a "' .. directory .. '"')
         for filename in pfile:lines() do
@@ -24,7 +25,7 @@ function factory()
         return t
     end
 
-    function get_template()
+    local function get_template()
         if (TEMPLATE) then
             return TEMPLATE
         end
@@ -66,7 +67,7 @@ function factory()
         return TEMPLATE
     end
 
-    function get_rec_armed_track()
+    local function get_rec_armed_track()
         for route in Session:get_tracks():iter() do
             if (route:rec_enable_control():get_value() == 1) then
                 return route:to_track()
@@ -77,19 +78,19 @@ function factory()
     end
 
     return function()
-        rec_armed = get_rec_armed_track()
+        local rec_armed = get_rec_armed_track()
         if (not rec_armed) then
             TEMPLATE = nil
             return
         end
 
-        template_name = get_template()
+        local template_name = get_template()
         if (not template_name) then
             return
         end
 
-        template_path = ARDOUR.user_config_directory(-1) .. "/route_templates/" .. template_name
-        new_route = Session:new_route_from_template(
+        local template_path = ARDOUR.user_config_directory(-1) .. "/route_templates/" .. template_name
+        local new_route = Session:new_route_from_template(
             1,
             ArdourUI.translate_order(ArdourUI.InsertAt.AfterSelection),
             template_path,

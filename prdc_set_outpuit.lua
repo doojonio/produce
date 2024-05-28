@@ -8,10 +8,10 @@ ardour {
 
 function factory()
     local function connect_sides(output, input)
-        i = 0
+        local i = 0
         while true do
-            out = output:audio(i)
-            inp = input:audio(i)
+            local out = output:audio(i)
+            local inp = input:audio(i)
             i = i + 1
 
             if (out:isnil() or inp:isnil()) then
@@ -23,8 +23,8 @@ function factory()
 
         i = 0
         while true do
-            out = output:midi(i)
-            inp = input:midi(i)
+            local out = output:midi(i)
+            local inp = input:midi(i)
             i = i + 1
 
             if (out:isnil() or inp:isnil()) then

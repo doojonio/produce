@@ -13,7 +13,7 @@ function factory()
       LuaDialog.MessageType.Question,
       LuaDialog.ButtonType.Yes_No
     )
-    answer = md:run()
+    local answer = md:run()
 
     md = nil
     collectgarbage()
@@ -35,10 +35,10 @@ function factory()
         goto continue
       end
 
-      pl = r:to_track():playlist()
+      local pl = r:to_track():playlist()
 
       for reg in pl:region_list():iter() do
-        clone = ARDOUR.RegionFactory.clone_region(reg, false, false)
+        local clone = ARDOUR.RegionFactory.clone_region(reg, false, false)
         main_playlist:add_region(clone, reg:position(), 1, false)
       end
 

@@ -22,10 +22,10 @@ function factory()
     end
 
     local function get_last_send(route)
-        i = 0
-        last_send = nil
+        local i = 0
+        local last_send = nil
         while true do
-            send = route:nth_send(i)
+            local send = route:nth_send(i)
             i = i + 1
             if (send:isnil()) then
                 return last_send
@@ -38,18 +38,18 @@ function factory()
     return function()
         local sel = Editor:get_selection()
 
-        routes = sel.tracks:routelist()
+        local routes = sel.tracks:routelist()
         if (routes:size() < 2) then
             return
         end
 
-        send_to = routes:back()
+        local send_to = routes:back()
         -- not bus protection
         if (not send_to:to_track():isnil()) then
             return
         end
 
-        gain_value = get_gain_value()
+        local gain_value = get_gain_value()
         if (gain_value == nil) then
             return
         end
@@ -60,12 +60,12 @@ function factory()
                 break
             end
 
-            result = r:add_aux_send(send_to, r:nth_plugin(-1))
+            local result = r:add_aux_send(send_to, r:nth_plugin(-1))
             if (result == -1) then
                 print("failed to add send")
                 goto continue
             end
-            last_send = get_last_send(r)
+            local last_send = get_last_send(r)
 
             if (last_send) then
                 last_send:to_send():gain_control():set_value(gain_value, PBD.GroupControlDisposition.NoGroup)
