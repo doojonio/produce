@@ -3,7 +3,7 @@ ardour {
   name = "PRDC Takes merge",
   author = "doojonio",
   license = "GPL",
-  description = [[Merges playlists on different tracks to one on the first selected track]],
+  description = [[Merges playlists on different tracks to one on the last selected track]],
 }
 
 function factory()
@@ -29,7 +29,9 @@ function factory()
     local sel = Editor:get_selection()
 
     local main_playlist = nil
-    for r in sel.tracks:routelist():iter() do
+    local rl  = sel.tracks:routelist()
+    rl:reverse()
+    for r in rl:iter() do
       if (not main_playlist) then
         main_playlist = r:to_track():playlist()
         goto continue
