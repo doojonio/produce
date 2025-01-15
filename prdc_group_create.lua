@@ -91,7 +91,7 @@ function factory()
       end
     end
 
-    return group_name
+    return group_name:match("^%s*(.-)%s*$")
   end
 
 
@@ -119,7 +119,7 @@ function factory()
     )
 
     if (bus_rl:size() == 0) then
-      print("failed to create " .. TRACK_NAME .. " route")
+      print("failed to create " .. group_name .. " route")
       return
     end
 
